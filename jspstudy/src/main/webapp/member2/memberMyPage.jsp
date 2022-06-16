@@ -3,7 +3,7 @@
 
 <% MemberVo mv = (MemberVo)request.getAttribute("mv"); %>
 <% 
-	out.println("<script>alert('준비중입니다.');location.href='"+request.getContextPath()+"/board2/index.do2'</script>"); 
+	//out.println("<script>alert('준비중입니다.');location.href='"+request.getContextPath()+"/board2/index.do2'</script>"); 
 
 %>
 <!DOCTYPE HTML>

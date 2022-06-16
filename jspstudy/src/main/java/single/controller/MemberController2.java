@@ -187,40 +187,41 @@ public class MemberController2 extends HttpServlet {
 		}
 		
 		//회원정보 보기
-//		else if (command.equals("/member2/memberMyPage.do2")) {
-//			
-//			System.out.println("회원정보보기 들어왔음");
-//			//1.파라미터가 넘어옴
-//			String midx = request.getParameter("midx");
-//			int midx_ = Integer.parseInt(midx);
-//			System.out.println("midx : " +midx);
-//			//2. 처리함
-//			MemberDao md = new MemberDao();
-//			MemberVo mv = md.MemberSelectOne(midx_);
-//			request.setAttribute("mv", mv);		//내부적으로 자원공유	
-//			
-//			//3.이동함			
-//			RequestDispatcher rd = request.getRequestDispatcher("/member2/memberMyPage.jsp");					
-//			rd.forward(request, response);		
-//			
-//		}else if (command.equals("/member2/memberMyPageModify.do2")) {
-//			
-//			System.out.println("회원정보수정 들어왔음");
-//			//1.파라미터가 넘어옴
-//			String midx = request.getParameter("midx");
-//			int midx_ = Integer.parseInt(midx);
-//			
-//			//2. 처리함
-//			MemberDao md = new MemberDao();
-//			MemberVo mv = md.MemberSelectOne(midx_);
-//			
-//			request.setAttribute("mv", mv);		//내부적으로 자원공유	
-//			
-//			//3.이동함			
-//			RequestDispatcher rd = request.getRequestDispatcher("/member2/memberMyPageModify.jsp");					
-//			rd.forward(request, response);		
-//			
-//		}
+		else if (command.equals("/member2/memberMyPage.do2")) {
+			
+			System.out.println("회원정보보기 들어왔음");
+			//1.파라미터가 넘어옴
+			String midx = request.getParameter("midx");
+			int midx_ = Integer.parseInt(midx);
+			System.out.println("midx : " +midx);
+			//2. 처리함
+			MemberDao md = new MemberDao();
+			MemberVo mv = md.MemberSelectOne(midx_);
+			request.setAttribute("mv", mv);		//내부적으로 자원공유	
+			
+			//3.이동함			
+			RequestDispatcher rd = request.getRequestDispatcher("/member2/memberMyPage.jsp");					
+			rd.forward(request, response);		
+			
+		}else if (command.equals("/member2/memberMyPageModify.do2")) {
+			
+			System.out.println("회원정보수정 들어왔음");
+			//1.파라미터가 넘어옴
+			String midx = request.getParameter("midx");
+			int midx_ = Integer.parseInt(midx);
+			
+			//2. 처리함
+			MemberDao md = new MemberDao();
+			MemberVo mv = md.MemberSelectOne(midx_);
+			
+			request.setAttribute("mv", mv);		//내부적으로 자원공유	
+			
+			//3.이동함			
+			RequestDispatcher rd = request.getRequestDispatcher("/member2/memberMyPageModify.jsp");					
+			rd.forward(request, response);		
+			
+		}
+		
 //		//회원정보수정하기
 //		else if (command.equals("/member2/memberMyPageModifyAction.do")) {
 //			

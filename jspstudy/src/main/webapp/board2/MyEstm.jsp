@@ -13,33 +13,7 @@
 <meta charset="UTF-8">
 <title>내가 작성한 견적 페이지</title>
 <style>
-*{
-	margin: 0px;
-	padding: 0px;
-	text-decoration: none;
-	border-collapse: collapse;	
-	box-sizing: border-box;
-	}
-	
-	table{
-	margin-top: 20px;
-	margin-left: auto;
-	margin-right: auto;		
-	vertical-align: middle; /*글자 중앙정렬*/	
-	}
-	h1{
-		text-align: center;
-	}
-	
-	tr{
-	border-bottom: 1px solid #aaaaaa;
-	height: 50px;
-	vertical-align: middle;
-	}
-	.user{
-	margin-right: 10px;
-	text-align: right;
-}
+
 </style>
 <script>
 	function back(){
@@ -54,12 +28,11 @@
 </script>
 </head>
 <body>
-<div class="user">	
-		<div><a href="#">마이페이지</a>ㅣ<a href="#">로그아웃</a></div>
-		<div>이**님 안녕하세요!</div>
-	</div>
+	<!-- 공통nav -->
+	<jsp:include page="../link.jsp"/>
+	<!-- 공통nav끝 -->
 	<h1>내가 작성한 견적페이지</h1>
-	<hr>
+	<br>
 	<form name="frm">
 <table border=1>
 	<tbody>

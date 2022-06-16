@@ -29,6 +29,8 @@
 	 		//만약 이름이 관리자 이면 관리자 계정으로 로그인한다
 	 		if(session.getAttribute("memberName").equals("관리자")){
 	 		out.println("<a href='"+request.getContextPath()+"/board2/admin.do2'>관리자페이지</a>"+"<br>");
+	 		}else{
+	 			out.println("<a href='"+request.getContextPath()+"/member2/memberMyPage.do2?midx="+session.getAttribute("midx")+"'>마이페이지</a>"+"<br>");
 	 		}
 	 	}else{
 	%>

@@ -143,6 +143,47 @@ public class BoardController2 extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/board2/estimatelist.jsp");
 			rd.forward(request, response);
 		}
+		// 내가 작성항 견적리스트
+		else if (command.equals("/board2/MyEstm.do2")) {
+			System.out.println("내가 작성한 견적리스트화면");
+			
+			//처리
+			String page = request.getParameter("page");
+			if(page == null) page = "1";
+			int pagex = Integer.parseInt(page);
+			
+			String keyword = request.getParameter("keyword");
+			if(keyword == null) keyword = "";
+					
+			String searchType = request.getParameter("searchType");	
+			if(searchType == null) searchType = "subject";
+			
+			SearchCriteria scri = new SearchCriteria();
+			scri.setPage(pagex);
+			scri.setKeyword(keyword);
+			scri.setSearchType(searchType);
+	
+			//처리			
+			EstmDao ed = new EstmDao();
+			int cnt = ed.boardTotal(scri);
+			
+			PageMaker pm = new PageMaker();
+			pm.setScri(scri);
+			pm.setTotalCount(cnt);
+			
+			//
+			
+			ArrayList<EstmVo> alist = ed.BoardSelectAll();
+			request.setAttribute("alist", alist);   //데이터(자원) 공유
+			request.setAttribute("pm", pm);
+			
+			
+
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/board2/MyEstm.jsp");
+			rd.forward(request, response);
+		}
+				
 		
 		else if (command.equals("/board2/estimatecontent.do2")) {
 			System.out.println("견적상세보기화면");
@@ -504,7 +545,7 @@ public class BoardController2 extends HttpServlet {
 		}
 		//리뷰 수정하기
 		else if(command.equals("/board2/rvModify.do2")) {
-			System.out.println("리뷰수정하기 화면으로 들어왔음");
+			System.out.println("고객후기 수정하기 화면으로 들어왔음");
 			
 			//===========ModifyAction이 아닌 Modify에 있어야 함=======
 			
