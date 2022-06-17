@@ -2,4 +2,4 @@
     pageEncoding="UTF-8"  %>
 
 
-<%=request.getAttribute("idCheck")%>
+${idCheck}

@@ -167,7 +167,7 @@ user_wrap{
 							</td>
 							<td rowspan="2" class="content_gl_img">
 							<a href="<%=request.getContextPath() %>/board2/ctnview.do2?cidx=<%=cv.getCidx() %>">
-							<%=cv.getFilename() %></a>
+							<img src="<%=request.getContextPath() %>/board2/ctnview.do2?filename=<%=cv.getFilename() %>"></a>
 							</td>
 						</tr>
 						<tr>

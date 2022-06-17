@@ -45,6 +45,7 @@ public class BoardController2 extends HttpServlet {
 		System.out.println("command: " + command);
 //		String uploadPath = "D:\\eclipse-jee-2022-03-R-win32-x86_64\\workspace\\jspstudy\\src\\main\\webapp\\";
 		String uploadPath = "C:\\Users\\715\\git\\apiB\\jspstudy\\src\\main\\webapp\\";
+//		String uploadPath = "http://tomcat/webapps/ROOT/";
 		String saveFolder ="images";	
 		String saveFullPath = uploadPath+saveFolder; 
 		
