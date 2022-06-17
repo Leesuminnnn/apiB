@@ -63,6 +63,42 @@ public class MemberDao {
 		}
 		return value;
 	}
+	// 아이디 중복체크
+	public int registerCheck(String memberId) {
+		int idCheck = 0;
+		String sql = "select count(*) from users where memberid = ?";
+		ResultSet rs = null;
+		
+		try {
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, memberId);
+			 
+			 rs = pstmt.executeQuery();
+			 
+			 rs.next();
+			 
+			 idCheck=rs.getInt(1);
+			
+	    } catch(SQLException e) {
+				 e.printStackTrace();
+				 return -1;
+		
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+				} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		return idCheck;
+	}
+	
+	
 	
 	//로그인
 	public MemberVo Login(String memberId, String memberPwd) {

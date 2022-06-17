@@ -10,6 +10,10 @@
 <% 
 	PageMaker pm = (PageMaker)request.getAttribute("pm");
 	MemberVo mv = (MemberVo)request.getAttribute("mv");
+	
+	String keyword = pm.getScri().getKeyword();
+	
+	String searchType = pm.getScri().getSearchType();
 %>
 <!DOCTYPE html>
 <html>
@@ -68,6 +72,14 @@ tr{
 </form>
 <!-- 검색기능 끝 -->
 
+<% 
+if(alist == null && keyword == null){
+	out.println("작성된 글이 존재하지 않습니다.");
+	
+}
+
+%>
+
 <%for (RvVo rv: alist) {%>
 <table border="1" class="content">
 	<tbody>
@@ -97,9 +109,7 @@ tr{
 	<tr style="border-top:none; border-bottom: none;">
 		<td style="width:200px; text-align:right;">
 		<%
-		String keyword = pm.getScri().getKeyword();
 		
-		String searchType = pm.getScri().getSearchType();
 		
 		if(pm.isPrev() == true)
 			out.println("<a href='"+request.getContextPath()+"/board2/rvList.do2?page="+(pm.getStartPage()-1)+"&keyword="+keyword+"&searchType="+searchType+"'>◀</a>");
@@ -124,5 +134,6 @@ tr{
 	</tr>
 </table>
 <!-- 게시판 페이징 끝 -->
+<% %>
 </body>
 </html>

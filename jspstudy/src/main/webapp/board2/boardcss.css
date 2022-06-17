@@ -13,7 +13,6 @@
 	text-decoration: none;
 	border-collapse: collapse;	
 	box-sizing: border-box;
-	color: #000000;
 }
 
 
@@ -72,7 +71,7 @@ input[type=text], input[type=email], input[type=password]{
 	width: 200px;
 	height: 30px;
 	}
-input[type=button]{
+input[type=button], input[type=submit]{
 	padding: 5px;
 	cursor: pointer;
 	border-radius: 10px;

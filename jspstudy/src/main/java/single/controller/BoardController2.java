@@ -43,7 +43,8 @@ public class BoardController2 extends HttpServlet {
 		System.out.println("uri:" + uri);
 
 		System.out.println("command: " + command);
-		String uploadPath = "D:\\eclipse-jee-2022-03-R-win32-x86_64\\workspace\\jspstudy\\src\\main\\webapp\\";
+//		String uploadPath = "D:\\eclipse-jee-2022-03-R-win32-x86_64\\workspace\\jspstudy\\src\\main\\webapp\\";
+		String uploadPath = "C:\\Users\\715\\git\\apiB\\jspstudy\\src\\main\\webapp\\";
 		String saveFolder ="images";	
 		String saveFullPath = uploadPath+saveFolder; 
 		
@@ -79,7 +80,7 @@ public class BoardController2 extends HttpServlet {
 			int value = ed.insertEstm(writer, esdays, ip, place, memberphone, midx);
 			System.out.println(value);
 			if (value ==1) {
-				response.sendRedirect(request.getContextPath()+"/board2/index.do2");				
+				response.sendRedirect(request.getContextPath()+"/board2/index2.do2");				
 			}else {
 				//response.sendRedirect(request.getContextPath()+"/board2/MyEstm.do2?midx="+midx);		
 				response.sendRedirect(request.getContextPath()+"/board2/estimatewrite.do2");			
@@ -429,11 +430,11 @@ public class BoardController2 extends HttpServlet {
 			
 		}
 		//메인화면
-		else if(command.equals("/board2/index.do2")) {
+		else if(command.equals("/board2/index2.do2")) {
 			System.out.println("메인페이지");
 			
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/board2/index.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/board2/index2.jsp");
 			rd.forward(request, response);
 			
 			

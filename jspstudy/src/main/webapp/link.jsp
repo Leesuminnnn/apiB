@@ -7,7 +7,7 @@
 <!--  로그인 탭 -->
 <div class="user_wrap" style="display:flex;">
 	<strong style="font-size:1.5rem;">
-		<a href="<%=request.getContextPath()%>/board2/index.do2">logo</a>
+		<a href="<%=request.getContextPath()%>/board2/index2.do2">logo</a>
 	</strong>
 	
 	<!-- 탭메뉴 -->

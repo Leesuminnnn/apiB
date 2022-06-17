@@ -57,15 +57,12 @@ public class MemberController2 extends HttpServlet {
 			System.out.println(value);
 			
 			if (value == 1) {
-				response.sendRedirect(request.getContextPath() + "/member2/Login.jsp");
+				response.sendRedirect(request.getContextPath() + "/member2/Login.do2");
 				
 
 			} else {
-				response.sendRedirect(request.getContextPath() + "/member2/memberJoin.jsp");
-				PrintWriter out = response.getWriter();
-				out.println("<script>"
-						+ "alert(오류입니다)"
-						+ "</script>");
+				response.sendRedirect(request.getContextPath() + "/member2/memberJoin.do2");
+				 
 			}
 
 		} else if (command.equals("/member2/memberJoin.do2")) {
@@ -78,7 +75,20 @@ public class MemberController2 extends HttpServlet {
 
 			
 			//로그인페이지
-		} else if (command.equals("/member2/LoginAction.do2")) {
+		}else if(command.equals("/member2/checkId.do2")) {
+			
+			String memberId = request.getParameter("memberId");
+			
+			int idCheck = new MemberDao().registerCheck(memberId);
+			
+			request.setAttribute("idCheck", idCheck);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/member2/checkId.jsp");
+			rd.forward(request, response);
+			
+		}
+		
+		else if (command.equals("/member2/LoginAction.do2")) {
 			System.out.println("로그인페이지 처리 화면에 들어왔음");
 			//1. 넘어온 값을 받는다
 			String memberId = request.getParameter("memberId");
@@ -138,7 +148,7 @@ public class MemberController2 extends HttpServlet {
 				if (session.getAttribute("saveUrl") != null) {
 					response.sendRedirect((String) session.getAttribute("saveUrl"));
 				} else {
-					response.sendRedirect(request.getContextPath() + "/board2/index.do2");
+					response.sendRedirect(request.getContextPath() + "/board2/index2.do2");
 				}
 
 			} else {
@@ -157,7 +167,7 @@ public class MemberController2 extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			
-			response.sendRedirect(request.getContextPath()+"/board2/index.do2");
+			response.sendRedirect(request.getContextPath()+"/board2/index2.do2");
 			
 		}
 		

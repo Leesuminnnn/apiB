@@ -1,64 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="single.domain.*" %>
+<%@ page import="single.service.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="single.dbconn.Dbconn" %>
+
+<% MemberVo mv = (MemberVo)request.getAttribute("mv"); %>
+<% 
+Dbconn dbconn = new Dbconn(); 
+System.out.println("dbconn "+dbconn);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link type="text/css" rel="stylesheet" href="board2/boardcss.css">
+<title>메인화면</title>
 <style>
-*{
-	margin: 0px;
-	padding: 0px;
-	text-decoration: none;
-	border-collapse: collapse;	
-	box-sizing: border-box;
-}
-
-h1, .dv{
-	text-align: center;
-}
-.dv2{
-	margin-right: 10px;
-	text-align: right;
-	
-}
-.dv{
-	margin-top: 20px;
-}
-.dv>div, .dv2>div{
-	display: inline-block;
-}
-a{
-	color: #000000;
-}
-a:hover{
-	color: #a828a8;
-}
+	input[type=button]{
+	background: none;
+	border: 2px solid darkseagreen;
+	color: #000;
+	padding: 10px 20px;
+	border-radius: 20px;
+	outline: none;
+	transition: all .4s;
+	vertical-align:middle;
+	height: 40px;
+	}
+	input[type=button]:hover{
+	background: darkslategray;
+	color: white;
+	}
+	.content, img{
+	width: 80%;
+	}
 </style>
-<script>
-	
-</script>
+
 </head>
 <body>
-<div class="dv2">
-	<div><a href="<%=request.getContextPath() %>/member/memberList.do">회원 리스트</a></div><br>
-	<%
-		if(session.getAttribute("midx") != null){
-			out.println("회원아이디:" +session.getAttribute("memberId"));
-			out.println("회원이름:" +session.getAttribute("memberName"));
-			out.println("<a href='"+request.getContextPath()+"/member/memberLogout.do'>로그아웃</a>"+"<br>");
-		}else{
-
-	%>
-	<div><a href="<%=request.getContextPath() %>/member/memberJoin.do">회원가입</a></div>
-	
-	<div><a href="<%=request.getContextPath() %>/member/memberLogin.do">로그인</a></div>
-	<% }%>
+<!-- 내용 -->
+<!-- 메인화면 -->
+<form class="frm">
+<div>
+	<table class="content">
+		<tbody>
+			<tr>
+				<td><img src="images/인테리어6.jpg" alt=""></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-<h1>메인 페이지 입니다.</h1>
-<div class="dv">
-	<div><a href="<%=request.getContextPath() %>/board/boardWrite.do">게시판 글쓰기</a></div>
-	<div><a href="<%=request.getContextPath() %>/board/boardList.do">게시판 리스트</a></div>
-</div>
+	<div style="margin: 0 auto; text-align:center;" >
+		<input type="button" value="자세히보기 >" onclick="location.href='<%=request.getContextPath() %>/board2/index2.do2'">
+	</div>
+</form>
 </body>
 </html>
