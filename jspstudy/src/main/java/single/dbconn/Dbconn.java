@@ -16,9 +16,13 @@ public class Dbconn {
 //	private String pwdinfo = "1234";
 	
 	//mysql
-	private String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC&characterEncoding=UTF-8";
-	private String user = "root";
-	private String password = "1234";
+//	private String url = "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC&characterEncoding=UTF-8";
+//	private String user = "root";
+//	private String password = "1234";
+	
+	private String url = "jdbc:mysql://sull22.cafe24.com/sull22";
+	private String user = "sull22";
+	private String password = "Atn7als54!";
 	
 	public Connection getConnection() {
 		Connection conn = null;

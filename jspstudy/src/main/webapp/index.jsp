@@ -1,15 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.Dbconn" %>
 
-<% MemberVo mv = (MemberVo)request.getAttribute("mv"); %>
-<% 
-Dbconn dbconn = new Dbconn(); 
-System.out.println("dbconn "+dbconn);
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
