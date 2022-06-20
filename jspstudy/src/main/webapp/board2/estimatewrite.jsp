@@ -91,7 +91,7 @@
 			
 	    	return;		
 		}
-		fm.action = "<%=request.getContextPath()%>/board2/index.do2";
+		fm.action = "<%=request.getContextPath()%>/board2/index2.do2";
 		fm.method = "post";
 		fm.submit();
 		return;	

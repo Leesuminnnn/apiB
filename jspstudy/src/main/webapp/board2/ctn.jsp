@@ -4,12 +4,8 @@
 <%@ page import="single.service.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="single.dbconn.*" %>
-<%
-	ArrayList<CtnVo> alist = (ArrayList<CtnVo>)request.getAttribute("alist");
-%>
-<% 
-	PageMaker pm = (PageMaker)request.getAttribute("pm");
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,7 +126,7 @@ user_wrap{
 <!-- 공통nav끝 -->
 
 <!-- 게시판 리스트 검색기능 -->
-<form name="frm" action="<%=request.getContextPath()%>/board2/ctn.do2" method="post">
+<form name="frm" action="${pageContext.request.contextPath}/board2/ctn.do2" method="post">
 	<table class="sch">
 	<tbody style="">
 		<tr style="border-top: none; text-align:right; height: 25px;">
@@ -155,24 +151,24 @@ user_wrap{
 
 <table class="content">
 	<tbody>
-		<%for (CtnVo cv : alist) {%>
+		<c:forEach var="cv" items="${alist}">
 		<tr>
 			<td>
 				<table border="1" class="content_gl">
 					<tbody>
 						<tr>
 							<td class="content_gl_content">
-							<a href="<%=request.getContextPath() %>/board2/ctnview.do2?cidx=<%=cv.getCidx() %>">
-							<%=cv.getSubject() %></a>
+							<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
+							${cv.subject}</a>
 							</td>
 							<td rowspan="2" class="content_gl_img">
-							<a href="<%=request.getContextPath() %>/board2/ctnview.do2?cidx=<%=cv.getCidx() %>">
-							<img src="<%=request.getContextPath() %>/board2/ctnview.do2?filename=<%=cv.getFilename() %>"></a>
+							<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
+							<img src="${pageContext.request.contextPath}/board2/ctnview.do2?filename=${cv.filename}"></a>
 							</td>
 						</tr>
 						<tr>
 							<td class="content_gl_tag">
-							<a href="<%=request.getContextPath() %>/board2/ctn.do2?page=<%=pm.getStartPage()-1%>&keyword=<%=cv.getTag()%>&searchType=tag"><%=cv.getTag() %></a>
+							${cv.tag}
 							</td>
 						</tr>
 					</tbody>
@@ -180,18 +176,19 @@ user_wrap{
 			</td>
 		</tr>
 		
-		<%} %>
+		</c:forEach>
 		
 		<!-- 글쓰기 권한은 관리자만 -->
 		<tr>
-			<td colspan=3 style="background-color:White; height: 50px; text-align:right;">
-			<%
-			if(session.getAttribute("memberName").equals("관리자")){
-				out.println("<a href='"+request.getContextPath()+"/board2/ctnwrite.do2'>글쓰기</a>");
-			}else{
-				out.println("<a href='"+request.getContextPath()+"/board2/estimatewrite.do2'>견적신청</a>");
-			}
-			%>
+			<td colspan=3 style="background-color:White; height: 50px; text-align:right;">			
+				<c:choose>
+					<c:when test="${sessionScope.memberName eq '관리자'}">
+						<a href="${pageContext.request.contextPath}/board2/ctnwrite.do2">글쓰기</a>
+					</c:when>
+					<c:otherwise>
+						<a href="${pageContext.request.contextPath}/board2/estimatewrite.do2">견적신청</a>
+					</c:otherwise>
+				</c:choose>
 			</td>
 		</tr>
 	</tbody>
@@ -203,31 +200,19 @@ user_wrap{
 	<tr style="border-top:none; 
 	border-bottom: none;">
 		<td style="width:200px; text-align:right;">
-		<%
-		
-		String keyword = pm.getScri().getKeyword();
-		
-		String searchType = pm.getScri().getSearchType();
-		
-		if(pm.isPrev() == true)
-			out.println("<a href='"+request.getContextPath()+"/board2/ctn.do2?page="+(pm.getStartPage()-1)+"&keyword="+keyword+"&searchType="+searchType+"'>◀</a>");
-		%>
+		<c:if test="${pm.prev == true}">
+		<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${pm.startPage-1}&keyword=${pm.scri.keyword }&searchType=${pm.scri.searchtype}">◀</a>
+		</c:if>
 		</td>
 		<td>
-		<%
-		for(int i = pm.getStartPage(); i<=pm.getEndPage(); i++){
-			out.println("<a href='"+request.getContextPath()+"/board2/ctn.do2?page="+i+"&keyword="+keyword+"&searchType="+searchType+"'>"+"["+i+"]"+"</a>");
-			
-		}
-		
-		%>
+		<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+		<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${i}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">[${i}]</a>
+		</c:forEach>
 		</td>
 		<td style="width:200px; text-align:left;">
-		<%
-		if(pm.isNext()&&pm.getEndPage() > 0){
-			out.println("<a href='"+request.getContextPath()+"/board2/ctn.do2?page="+(pm.getEndPage()+1)+"&keyword="+keyword+"&searchType="+searchType+"'>▶</a>");
-		}
-		 %>
+		 <c:if test="${pm.next&&pm.endPage > 0}">
+		 <a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${pm.endPage+1}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">▶</a>
+		 </c:if>
 		</td>
 	</tr>
 </table>

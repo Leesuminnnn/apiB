@@ -140,11 +140,11 @@ public class MemberController2 extends HttpServlet {
 				session.setAttribute("memberPhone", mv.getMemberphone());
 				session.setAttribute("imadmin", mv.getImadmin());
 				
-				System.out.println(mv.getMidx());
-				System.out.println(mv.getMemberid());
-				System.out.println(mv.getMembername());
-				System.out.println(mv.getMemberphone());
-				System.out.println(mv.getImadmin());
+				System.out.println("midx:"+mv.getMidx());
+				System.out.println("memberId: "+mv.getMemberid());
+				System.out.println("memberName: "+mv.getMembername());
+				System.out.println("memberPhone: "+mv.getMemberphone());
+				System.out.println("imadmin: "+mv.getImadmin());
 				if (session.getAttribute("saveUrl") != null) {
 					response.sendRedirect((String) session.getAttribute("saveUrl"));
 				} else {

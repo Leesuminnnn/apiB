@@ -222,7 +222,7 @@
 	 			   $('#checkPhone').attr('color','red');
 	 			   $('#phone').focus();
 	 		  }
-  });
+  		});
 		
 		// ajax를 이용한 유효성 검사
 		$("#frm").on('submit' , function(){
@@ -266,8 +266,9 @@
   				return false;
   			}
 		});
+	});	
 		//다시작성을 누르면
-		function rst(){						
+		/* function rst(){						
 			var fm = document.frm;
 			if (confirm("다시 작성 하시겠습니까?") == true){    //확인
 
@@ -280,28 +281,7 @@
 			fm.method = "post";
 			fm.submit();
 			return;	
-		}
-		//돌아가기를 누르면
-		
-		function fg(){
-			var fm = document.frm;
-			
-			alert("메인화면으로 돌아갑니다.");
-			fm.action = "<%=request.getContextPath()%>/board2/index.do2";
-			fm.method = "post";
-			fm.submit();
-			
-			return;
-		}
-		
-		
-		
-	});	 
-	
-	
-	
-	
-	
+		} */
 		
 	</script>
 	</HEAD>
@@ -383,10 +363,12 @@
 														
 				<tr>
 					<td colspan="2" style="text-align:center;">
-					 <input type="submit" id="joinBtn" name="join_Btn" class="btn" value="가입하기"> 
+					 <input type="submit" id="joinBtn" name="join_Btn" class="btn" value="가입하기">
+					 <!-- <input type="button" id="rstbtn" name="rstbtn" class="btn" value="다시작성">  -->
 	  					<!-- <input type="button" class="btn" value="확인" onclick="check();"> --> 
-						<input type="reset" class="btn" value="다시작성" onclick="rst();"> 						
-						<input type="button" class="btn" value="돌아가기" onclick="fg();">
+						<!-- <input type="reset" class="btn" value="다시작성" onclick="rst();"> --> 						
+						<!-- <input type="button" id="fgBtn" name="fgBtn" class="btn" value="돌아가기"> -->
+						<input type="button" value="돌아가기" onclick="history.back();" />
 					</td>
 				</tr>
 			</table>

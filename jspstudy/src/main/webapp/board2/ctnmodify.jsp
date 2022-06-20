@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ page import="single.domain.CtnVo" %>
-
-<% CtnVo cv =  (CtnVo)request.getAttribute("cv"); %>
-<%
-
-if(session.getAttribute("midx") == null){
-	out.println("<script>alert('로그인을 해주세요');location.href='"+request.getContextPath()+"/member2/Login.do2'</script>");
-}
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 뒤로가기가 아닌 로그인 화면으로 넘기기 -->
+<c:if test="${sessionScope.midx eq null}">
+	<script>alert("로그인을 해주세요.");javascript:history.back();</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +16,9 @@ if(session.getAttribute("midx") == null){
 <style>
 	
 </style>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+/*
 function check(){
 //	alert("테스트입니다.")
 	var fm = document.frm;
@@ -50,24 +49,42 @@ function check(){
 	    	return;		
 		}
 	//가상경로 사용
-	fm.action = "<%=request.getContextPath()%>/board2/ctnmodifyAction.do2";
+ 	fm.action = "${pageContext.request.contextPath}/board2/ctnmodifyAction.do2";
 	fm.enctype = "multipart/form-data";
 	fm.method = "post";
 	fm.submit();
 	
 	return;
-}
+} */
+// ajax를 이용한 유효성 검사
+$("#frm").on('submit' , function(){
+	
+	var subject = $("#subject").val();
+	var content = $("#content").val();
+	var writer = $("#writer").val();
+	var tag = $("#tag").val();
+	
+	if(subject == ''){
+		alert("제목을 입력해주세요");
+		$("#subject").focus();
+		return false;
+	}else if(content == ''){
+		alert("내용을 입력해주세요");
+		$("#content").focus();
+		return false;
+	}else if(writer == ''){
+		alert("작성자를 확인해주세요");
+		$("writer").focus();
+		return false;
+	}else if(tag == ''){
+		alert("태그를 선택해주세요");
+		$("tag").focus();
+		return false;
+	}
+	
+});
 
-function prev(){
-	
-	var fm = document.frm;
-	
-	fm.action = "javascript:history.back();";
-	fm.method = "post";
-	fm.submit();
-	
-	return;
-}
+
 
 </script>
 <body>
@@ -77,8 +94,8 @@ function prev(){
 <!-- 공통nav끝 -->
 	<h1>게시판 글수정하기</h1>
 	<br>
-	<form name="frm">
-	<input type="hidden" name="cidx" value="<%=cv.getCidx() %>">
+	<form name="frm" action="${pageContext.request.contextPath}/board2/ctnmodifyAction.do2" method="post">
+	<input type="hidden" name="cidx" value="${cv.cidx }">
 		<table border=1 class="content">
 			<tr>
 				<td>태그 선택</td>
@@ -92,24 +109,24 @@ function prev(){
 			</tr>
 			<tr>
 				<td style="width: 180px; height: 40px;">제목</td>
-				<td style="padding-left: 10px; text-align:left;"><input type="text" name="subject" value="<%=cv.getSubject() %>"></td>
+				<td style="padding-left: 10px; text-align:left;"><input type="text" name="subject" id="subject" value="${cv.subject }"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td style="padding: 10px; text-align:left;"><textarea name="content" placeholder="내 용"><%=cv.getContent() %></textarea></td>
+				<td style="padding: 10px; text-align:left;"><textarea name="content" id="content" placeholder="내 용">${cv.content }</textarea></td>
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="padding-left:10px; text-align:left;"><input type="text" name="writer" placeholder="작성자" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+				<td style="padding-left:10px; text-align:left;"><input type="text" name="writer" id="writer" placeholder="작성자" value="${sessionScope.memberName }" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<td>첨부파일</td>
-				<td style="padding: 10px; text-align:left;"><input type="file" name="filetype"></td>
+				<td style="padding: 10px; text-align:left;"><input type="file" name="filetype" id="filetype"></td>
 			</tr>
 			<tr style="text-align: center;" >
 				<td colspan=2 style="padding-top:5px; padding-bottom:5px;">
-					<input type="button" value="확인" onclick="check();">
-					<input type="button" value="취소" onclick="prev();">
+					<input type="submit" id="check" name="check" value="확인" onclick="check();">
+					<input type="button" value="취소" onclick="history.back();">
 				</td>
 			</tr>
 		</table>

@@ -5,6 +5,7 @@
 <%@ page import="single.service.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="single.dbconn.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <!DOCTYPE html>

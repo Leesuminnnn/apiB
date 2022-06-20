@@ -33,6 +33,19 @@
 	<url-pattern>*.do2</url-pattern>
   </servlet-mapping>
   
+
+  <servlet>
+  	<servlet-name>servletname</servlet-name>
+  	<servlet-class>com.servletname</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>servletname</servlet-name>
+	<url-pattern>/servlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
   <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/</url-pattern>

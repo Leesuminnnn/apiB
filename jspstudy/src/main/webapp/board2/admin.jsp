@@ -4,14 +4,13 @@
 <%@ page import="single.service.*" %>
 <%@ page import="single.dbconn.*" %>
 <%@ page import="java.util.*" %>
-<%
-	ArrayList<MemberVo> alist = (ArrayList<MemberVo>)request.getAttribute("alist");
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>관리자 페이지</title>
 <link type="text/css" rel="stylesheet" href="/boardcss.css">
 <style>
 
@@ -82,9 +81,14 @@ tr>td:first-child{
 </head>
 <body>
 <div class="wrap">
-<%if(session.getAttribute("memberName")!=("관리자")){
-		out.println("<script>alert(잘못된 접근입니다.);javascript:history.back() </script>");
-		}
+<c:set var="membername" value="관리자" />
+<!-- 관리자가 아닐경우 출력 -->
+<c:if test="${membername ne '관리자' && membername == null}">
+	${'<script>alert(잘못된 접근입니다.);</script>'}
+</c:if>
+<%//if(session.getAttribute("memberName")!=("관리자")){
+	//	out.println("<script>alert(잘못된 접근입니다.);javascript:history.back() </script>");
+	//	}
 	 %>
 <!-- 공통nav -->
 <jsp:include page="/link.jsp"/>
@@ -96,12 +100,12 @@ tr>td:first-child{
 <nav>
 <p>회원관리</p>
 <ul>
-	<li><a href="<%=request.getContextPath()%>/member2/usersInfo.do2">&nbsp;사용자</a></li>
+	<li><a href="${pageContext.request.contextPath}/member2/usersInfo.do2">&nbsp;사용자</a></li>
 </ul>
 <p>컨텐츠관리</p>
 <ul>
-	<li><a href="<%=request.getContextPath()%>/board2/iqylist.do2">&nbsp;문의내역</a></li>
-	<li><a href="<%=request.getContextPath()%>/board2/estimatelist.do2">&nbsp;견적내역</a></li>
+	<li><a href="${pageContext.request.contextPath}/board2/iqylist.do2">&nbsp;문의내역</a></li>
+	<li><a href="${pageContext.request.contextPath}/board2/estimatelist.do2">&nbsp;견적내역</a></li>
 </ul>
 </nav>
 <section>
@@ -113,14 +117,13 @@ tr>td:first-child{
 				<td>회원이름</td>
 				<td>아이디</td>
 			</tr>
-			<%for( MemberVo mv : alist ) {%>
+			<c:forEach var="mv" items="${alist}">
 			<tr>
-				<td><%=mv.getMidx() %></td>
-				<td><%=mv.getMembername() %></td>
-				<td><%=mv.getMemberid() %></td>
+				<td>${mv.midx}</td>
+				<td>${mv.membername}</td>
+				<td>${mv.memberid}</td>
 			</tr>
-			<%} %>
-			
+			</c:forEach>
 		</table>	
 	</form>
 </section>

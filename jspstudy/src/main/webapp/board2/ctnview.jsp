@@ -3,9 +3,8 @@
 <%@ page import="single.domain.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="single.service.*" %>
-<% CtnVo cv =  (CtnVo)request.getAttribute("cv"); %>	<!-- 강제 형변환 -->
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<% MemberVo mv = (MemberVo)request.getAttribute("mv"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,33 +32,35 @@
 		<table border=1 class="content">
 			<tr>
 				<td style="width: 180px; height: 40px;">제목 / 작성일</td>
-				<td style="text-align:left;"><%=cv.getSubject() %> / <%=cv.getWriteday().substring(5,10) %></td>
+				<td style="text-align:left;">${cv.subject} / ${cv.writeday.substring(5,10)}</td>
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="text-align:left;"><%=cv.getWriter() %></td>
+				<td style="text-align:left;">${cv.writer}</td>
 			</tr>
 			<tr>
 				<td>내용</td>
 				<td style="width: 500px; height: 300px; vertical-align:top; text-align:left;">
-				<%=cv.getContent() %>
-				<%
-				
-				%>
+				${cv.content}
+			
 				<br>
-				<%if(cv.getFilename() != null){ %>
-				
-				<img src="<%=request.getContextPath()%>/images/<%=cv.getFilename()%>">
-				<%}else{ %>
-					<div></div>
-					<%} %>
+				<c:if test="${Filename ne null}">
+					<img src="${pageContext.request.contextPath}/imeges/${cv.filename}">
+				</c:if>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" style="padding-top:5px; padding-bottom:5px; text-align:center;">
-					<input type="button" name="ctnmodipy" value="수정" onclick="location.href='<%=request.getContextPath() %>/board2/ctnmodify.do2?cidx=<%=cv.getCidx()%>'">
-					<input type="button" name="ctndelete" value="삭제" onclick="location.href='<%=request.getContextPath() %>/board2/ctndelete.do2?cidx=<%=cv.getCidx()%>'">
-					<input type="button" name="ctnlist" value="목록"onclick="location.href='<%=request.getContextPath() %>/board2/ctn.do2'">
+					<c:choose>
+						<c:when test="${sessionScope.memberName eq '관리자'}">
+							<input type="button" name="ctnmodipy" value="수정" onclick="location.href='${pageContext.request.contextPath}/board2/ctnmodify.do2?cidx=${cv.cidx}'">
+							<input type="button" name="ctndelete" value="삭제" onclick="location.href='${pageContext.request.contextPath}/board2/ctndelete.do2?cidx=${cv.cidx}'">
+							<input type="button" name="ctnlist" value="목록"onclick="location.href='${pageContext.request.contextPath}/board2/ctn.do2'">
+						</c:when>
+						<c:otherwise>
+						<input type="button" name="ctnlist" value="목록"onclick="location.href='${pageContext.request.contextPath}/board2/ctn.do2'">
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 		</table>	
