@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>    
+    pageEncoding="utf-8"%>   
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+// 자바영역에서 세션에 URI를 저장해서 로그인 시 다시 돌아오게 함 
+session.setAttribute("saveUrl", request.getRequestURI()); %>
 
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-<% if (session.getAttribute("imadmin").equals("N")){
-	out.println("<script>alert('권한이 없습니다.');location.href='"+request.getContextPath()+"/board2/index.do2'</script>");
- }
-%>
+<c:if test="${sessionScope.imadmin eq 'N'}">
+	<script>
+		alert("권한이 없습니다");location.href="${pageContext.request.contextPath}/board2/index2.do2"
+	</script>
+</c:if>
+
 
 <!DOCTYPE html>
 <html>
@@ -51,7 +53,7 @@ function check(){
 	}		
 	alert("전송합니다.");
 	//가상경로 사용
-	fm.action = "<%=request.getContextPath()%>/board2/qnawriteAction.do2";
+	fm.action = "${pageContext.request.contextPath}/board2/qnawriteAction.do2";
 	fm.method = "post";
 	fm.submit();
 	
@@ -93,7 +95,7 @@ function prev(){
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="padding-left:10px;"><input type="text" name="writer" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+				<td style="padding-left:10px;"><input type="text" name="writer" value="${sessionScope.memberName}" readonly="readonly"></td>
 			</tr>
 			<tr style="text-align: center;" >
 				<td colspan=2 style="padding-top:5px; padding-bottom:5px;">

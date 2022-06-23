@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-<%
-	RvVo rv = (RvVo)request.getAttribute("rv");
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,31 +22,35 @@
 		<table border=1 class="content">
 			<tr>
 				<td style="width: 180px; height: 40px;">제목 / 작성일</td>
-				<td><%=rv.getSubject() %> / <%=rv.getWriteday().substring(5,10) %></td>
+				<td>${rv.subject} / ${rv.writeday}</td>
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자 / 별점</td>
-				<td><%=rv.getWriter().substring(0,1) %>**님 / <%=rv.getStar() %></td>
+				<td>${rv.writer}님 / ${rv.star}</td>
 				
 			</tr>
 			<tr>
 				<td>내용</td>
 				<td style="width: 500px; height: 300px; vertical-align:top;">
-				<%=rv.getContent() %>
+				${rv.content}
 				<br>
-				<img src="<%=request.getContextPath()%>/images/<%=rv.getFilename()%>">
+				<img src="${pageContext.request.contextPath}/images/${rv.filename}">
 				
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" style="padding-top:5px; padding-bottom:5px; text-align:center;">
-					<%if (session.getAttribute("memberId") != null
-						&& session.getAttribute("imadmin").equals("N")) {%>
-					<input type="button" name="list" value="목록" onclick="location.href='<%=request.getContextPath() %>/board2/rvList.do2'">
-				<%} %>
-					<input type="button" name="modipy" value="수정" onclick="location.href='<%=request.getContextPath() %>/board2/rvModify.do2?ridx=<%=rv.getRidx()%>'">
-					<input type="button" name="delete" value="삭제" onclick="location.href='<%=request.getContextPath() %>/board2/rvDelete.do2?ridx=<%=rv.getRidx()%>'">
-					<input type="button" name="list" value="목록" onclick="location.href='<%=request.getContextPath() %>/board2/rvList.do2'">
+					<c:choose>
+						<c:when test="${sessionScope.memberId ne null and 
+							sessionScope.imadmin eq 'N'}">
+							<input type="button" name="list" value="목록" onclick="location.href='${pageContext.request.contextPath}/board2/rvList.do2'">
+						</c:when>
+						<c:otherwise>
+							<input type="button" name="modipy" value="수정" onclick="location.href='${pageContext.request.contextPath}/board2/rvModify.do2?ridx=${rv.ridx}'">
+							<input type="button" name="delete" value="삭제" onclick="location.href='${pageContext.request.contextPath}/board2/rvDelete.do2?ridx=${rv.ridx}'">
+							<input type="button" name="list" value="목록" onclick="location.href='${pageContext.request.contextPath}/board2/rvList.do2'">
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>

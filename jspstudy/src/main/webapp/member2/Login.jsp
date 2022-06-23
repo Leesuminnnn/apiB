@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,14 +117,14 @@ label[for="gstlg"] {
 		}
 		
 //		alert("전송");
-		fm.action = "<%=request.getContextPath()%>/member2/LoginAction.do2";
+		fm.action = "${pageContext.request.contextPath}/member2/LoginAction.do2";
   		fm.method = "post";
   		fm.submit();
   		
   		
   		return;
 	}
-	//엔터키로 로그인하기 구현완료
+	//엔터키로 로그인하기
 	function enterkey(){
 		if(window.event.keyCode == 13){
 			//엔터키가 눌렸을때 실행할 내용
@@ -141,14 +142,7 @@ label[for="gstlg"] {
 	<h1>로그인 페이지</h1>
 	<form name="frm">
 		<table style="text-align: left; width: 400px; height: 150px">
-			<!-- <tr style="text-align: center;">
-				<td style="width: 200px; padding-right: 50px;"><input
-					type="radio" value="login" name="login" id="gstlg" checked><label
-					for="gstlg">회원</label></td>
-				<td style="width: 200px; padding-left: 50px;"><input
-					type="radio" value="login" name="login" id="stmlg"><label
-					for="stmlg">관리자</label></td>
-			</tr> -->
+			
 			<tr style="text-align: center;">
 				<td colspan="2"><input type="text" name="memberId" size="25"
 					height="35" placeholder="아이디를 입력해주세요" onkeyup="enterkey();" ></td>
@@ -177,7 +171,7 @@ label[for="gstlg"] {
 		</table>
 		<div class="dv">
 			<div>
-				<a href="<%=request.getContextPath()%>/member2/memberJoin.do2">회원가입</a>
+				<a href="${pageContext.request.contextPath}/member2/memberJoin.do2">회원가입</a>
 			</div>
 			ㅣ
 			<div>

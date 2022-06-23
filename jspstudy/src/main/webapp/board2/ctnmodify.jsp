@@ -2,7 +2,9 @@
     pageEncoding="utf-8"%>
 <%@ page import="single.domain.CtnVo" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 뒤로가기가 아닌 로그인 화면으로 넘기기 -->
+<%
+// 자바영역에서 세션에 URI를 저장해서 로그인 시 다시 돌아오게 함 
+session.setAttribute("saveUrl", request.getRequestURI()); %>
 <c:if test="${sessionScope.midx eq null}">
 	<script>alert("로그인을 해주세요.");javascript:history.back();</script>
 </c:if>
@@ -94,7 +96,7 @@ $("#frm").on('submit' , function(){
 <!-- 공통nav끝 -->
 	<h1>게시판 글수정하기</h1>
 	<br>
-	<form name="frm" action="${pageContext.request.contextPath}/board2/ctnmodifyAction.do2" method="post">
+	<form name="frm" action="${pageContext.request.contextPath}/board2/ctnmodifyAction.do2" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="cidx" value="${cv.cidx }">
 		<table border=1 class="content">
 			<tr>

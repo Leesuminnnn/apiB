@@ -53,13 +53,23 @@ public class EstmDao {
 		return value;
 	}
 	//관리자페이지에서 견적리스트 보기
-	public ArrayList<EstmVo> BoardSelectAll(){
+	public ArrayList<EstmVo> BoardSelectAll(SearchCriteria scri){
+		
 		ArrayList<EstmVo> alist = new ArrayList<EstmVo>();
 		ResultSet rs = null;
-		String sql="select * from estm where delyn='N' order by eidx desc";
+		// 게시판 리스트 검색기능 추가
+		String str = "";
+		if(scri.getSearchType().equals("writer")) {
+			str = "and writer like concat(?)";
+		}else {
+			str = "and place like concat(?)";
+		}
+		String sql="select * from estm where delyn='N' "+str+" order by eidx desc limit ?,10";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+scri.getKeyword()+"%");			
+			pstmt.setInt(2, (scri.getPage()-1)*10);
 			rs = pstmt.executeQuery();
 			//rs.next() �������� �����ϸ� true�̰� �� ������ Ŀ���� �̵��ϴ� �޼ҵ�
 			while(rs.next()) {
@@ -162,17 +172,17 @@ public class EstmDao {
 		
 		// 게시판 리스트 검색기능 추가
 		String str = "";
-		if(scri.getSearchType().equals("subject")) {
-			str = "and subject like concat(?)";
-		}else {
+		if(scri.getSearchType().equals("writer")) {
 			str = "and writer like concat(?)";
+		}else {
+			str = "and place like concat(?)";
 		}
 		
 		String sql = "select count(*) as cnt from estm where delyn='N' "+str+" ";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%,"+scri.getKeyword()+",%");
+			pstmt.setString(1, "%"+scri.getKeyword()+"%");
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				cnt = rs.getInt("cnt");
@@ -183,6 +193,75 @@ public class EstmDao {
 		return cnt;
 	}
 	
+	//내가 작성한 견적서 보기
+	public ArrayList<EstmVo> BoardSelectMyEList(int midx, SearchCriteria scri){
+		
+		ArrayList<EstmVo> myalist = new ArrayList<EstmVo>();
+		ResultSet rs = null;
+		
+		
+		String sql="select * from estm where delyn='N' and midx=? order by eidx desc limit ?,10";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(2, (scri.getPage()-1)*10);
+			rs = pstmt.executeQuery();
+			//rs.next() �������� �����ϸ� true�̰� �� ������ Ŀ���� �̵��ϴ� �޼ҵ�
+			while(rs.next()) {
+				EstmVo ev = new EstmVo();
+				ev.setMidx(rs.getInt("midx"));
+				
+				ev.setEidx(rs.getInt("eidx"));
+				ev.setWriter(rs.getString("writer"));
+				ev.setEsdays(rs.getString("esdays"));
+				ev.setWriteday(rs.getString("writeday"));
+				ev.setPlace(rs.getString("place"));
+				ev.setChecked(rs.getString("checked"));
+				ev.setPmdays(rs.getString("pmdays"));
+				myalist.add(ev);
+			}			
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}				
+		}
+		
+		return myalist;
+	}
+	public int boardTotal2(SearchCriteria scri) {
+		int cnt = 0;
+		ResultSet rs = null;
+		
+		
+		// 게시판 리스트 검색기능 추가
+		String str = "";
+		if(scri.getSearchType().equals("check")) {
+			str = "and check like concat(?)";
+		}else {
+			str = "and un_check like concat(?)";
+		}
+		
+		String sql = "select count(*) as cnt from estm where delyn='N' "+str+" ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+scri.getKeyword()+"%");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
 
 
 }

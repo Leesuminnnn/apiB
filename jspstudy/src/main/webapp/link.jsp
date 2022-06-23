@@ -5,7 +5,6 @@
 <%@ page import="java.util.*" %>
 <%@ page import="single.dbconn.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!--  로그인 탭 -->
 <div class="user_wrap" style="display:flex;">
 	<strong style="font-size:1.5rem;">
@@ -33,7 +32,7 @@
 						<a href="${pageContext.request.contextPath}/board2/admin.do2">관리자페이지</a><br>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/member2/memberMyPage.do2">마이페이지</a><br>
+						<a href="${pageContext.request.contextPath}/member2/memberMyPage.do2?midx=${sessionScope.midx}">마이페이지</a><br>
 					</c:otherwise>
 				</c:choose>
 		</c:when>

@@ -86,6 +86,12 @@ public class MemberController2 extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/member2/checkId.jsp");
 			rd.forward(request, response);
 			
+		}else if (command.equals("/member2/Login.do2")) {
+			System.out.println("로그인 페이지에 들어왔음");
+
+			RequestDispatcher rd = request.getRequestDispatcher("/member2/Login.jsp");
+			rd.forward(request, response);
+
 		}
 		
 		else if (command.equals("/member2/LoginAction.do2")) {
@@ -154,13 +160,6 @@ public class MemberController2 extends HttpServlet {
 			} else {
 				response.sendRedirect(request.getContextPath() + "/member2/Login.do2");
 			}
-
-		}else if (command.equals("/member2/Login.do2")) {
-			System.out.println("로그인 페이지에 들어왔음");
-			System.out.println(request.getContextPath());
-
-			RequestDispatcher rd = request.getRequestDispatcher("/member2/Login.jsp");
-			rd.forward(request, response);
 
 		}else if (command.equals("/member2/Logout.do2")) {
 			
@@ -232,30 +231,30 @@ public class MemberController2 extends HttpServlet {
 			
 		}
 		
-//		//회원정보수정하기
-//		else if (command.equals("/member2/memberMyPageModifyAction.do")) {
-//			
-//			String memberPwd = request.getParameter("memberPwd");
-//			String memberAddr = request.getParameter("memberAddr");
-//			String memberEmail = request.getParameter("memberEmail");
-//			String memberPhone = request.getParameter("memberPhone");
-//			String memberId = request.getParameter("memberId");
-//			String midx = request.getParameter("midx");
-//			int midx_ = Integer.parseInt(midx);
-//			
-//			
-//			
-//			MemberDao md = new MemberDao();
-//			int value = md.updateMember(memberPwd, memberAddr, memberEmail, memberPhone, memberId, midx_);
-//			System.out.println(value);
-//			if (value ==1) {
-//				response.sendRedirect(request.getContextPath()+"/member2/memberMyPage.do2");				
-//			}else {
-//				response.sendRedirect(request.getContextPath()+"/member2/memberMyPageModify.do2");				
-//			}	
-//			
-//			
-//		}
+		//회원정보수정하기
+		else if (command.equals("/member2/memberMyPageModifyAction.do2")) {
+			
+			String memberPwd = request.getParameter("memberPwd");
+			String memberAddr = request.getParameter("memberAddr");
+			String memberEmail = request.getParameter("memberEmail");
+			String memberPhone = request.getParameter("memberPhone");
+			String memberId = request.getParameter("memberId");
+			String midx = request.getParameter("midx");
+			int midx_ = Integer.parseInt(midx);
+			
+			
+			
+			MemberDao md = new MemberDao();
+			int value = md.updateMember(memberPwd, memberAddr, memberEmail, memberPhone, memberId, midx_);
+			System.out.println(value);
+			if (value ==1) {
+				response.sendRedirect(request.getContextPath()+"/member2/memberMyPage.do2");				
+			}else {
+				response.sendRedirect(request.getContextPath()+"/member2/memberMyPageModify.do2");				
+			}	
+			
+			
+		}
 		
 	}
 

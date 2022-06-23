@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ page import="single.domain.IqyVo" %>
-<% IqyVo iv = (IqyVo)request.getAttribute("iv"); %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +42,7 @@
 	function check(){
 		var fm = document.frm
 		
-		fm.action = "<%=request.getContextPath()%>/board2/iqyDeleteAction.do2";
+		fm.action = "${pageContext.request.contextPath}/board2/iqyDeleteAction.do2";
 		fm.method = "post";
 		fm.submit();
 		
@@ -62,7 +62,7 @@
 <body>
 <h1>글 삭제 페이지</h1>
 	<form name="frm">
-	<input type="hidden" name="iidx" value="<%=iv.getIidx() %>">
+	<input type="hidden" name="iidx" value="${iv.iidx}">
 		<table>
 			<tr style="height:200px">
 				<td>삭제하시겠습니까?</td>

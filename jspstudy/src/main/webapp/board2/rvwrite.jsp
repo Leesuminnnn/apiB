@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>    
+    pageEncoding="utf-8"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+// 자바영역에서 세션에 URI를 저장해서 로그인 시 다시 돌아오게 함 
+session.setAttribute("saveUrl", request.getRequestURI()); %>
 
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-<% if (session.getAttribute("midx") == null){
-	out.println("<script>alert('로그인이 필요합니다');location.href='"+request.getContextPath()+"/member2/Login.do2'</script>"); 
- } 
-%>
+<c:if test="${sessionScope.midx eq null}">
+	<script>
+		alert("유효하지 않은 접근입니다. 로그인을 해주세요");location.href="${pageContext.request.contextPath}/member2/Login.do2"
+	</script>
+</c:if>
 
 <!DOCTYPE html>
 <html>
@@ -60,7 +61,7 @@ function check(){
 	
 	alert("전송합니다.");
 	//가상경로 사용
-	fm.action = "<%=request.getContextPath()%>/board2/rvwriteAction.do2";
+	fm.action = "${pageContext.request.contextPath}/board2/rvwriteAction.do2";
 	fm.enctype = "multipart/form-data";
 	fm.method = "post";
 	fm.submit();
@@ -110,7 +111,7 @@ function prev(){
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="padding-left:10px;"><input type="text" name="writer" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+				<td style="padding-left:10px;"><input type="text" name="writer" value="${sessionScope.memberName}" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<td>첨부파일</td>

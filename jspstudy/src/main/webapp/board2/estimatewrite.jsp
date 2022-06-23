@@ -2,12 +2,16 @@
 <%@ page import="single.domain.*" %>
 <%@ page import="single.service.*" %>
 <%@ page import="java.util.*" %>
-<% if (session.getAttribute("midx") == null){
-	out.println("<script>alert('로그인이 필요합니다');location.href='"+request.getContextPath()+"/member2/Login.do2'</script>"); 
- } 
-%>
-<% MemberVo mv = (MemberVo)request.getAttribute("mv");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+// 자바영역에서 세션에 URI를 저장해서 로그인 시 다시 돌아오게 함 
+session.setAttribute("saveUrl", request.getRequestURI()); %>
+
+<c:if test="${sessionScope.midx eq null }">
+	<script type="text/javascript">
+		alert("잘못된 접근입니다. 로그인을 해주세요");location.href="${pageContext.request.contextPath}/member2/Login.do2"
+	</script>
+</c:if>
 <!DOCTYPE HTML>
 <HTML>
 	<HEAD>
@@ -60,7 +64,7 @@
 		
 		alert("전송합니다.");
 		//가상경로 사용
-		fm.action = "<%=request.getContextPath()%>/board2/estimatewriteAction.do2";
+		fm.action = "${pageContext.request.contextPath}/board2/estimatewriteAction.do2";
 		fm.enctype = "multipart/form-data";
 		fm.method = "post";
 		fm.submit();
@@ -91,7 +95,7 @@
 			
 	    	return;		
 		}
-		fm.action = "<%=request.getContextPath()%>/board2/index2.do2";
+		fm.action = "${pageContext.request.contextPath}/board2/index2.do2";
 		fm.method = "post";
 		fm.submit();
 		return;	
@@ -109,11 +113,11 @@
 			<table style="text-align:left; width:400px; height:300px">
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="writer" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+					<td><input type="text" name="writer" value="${sessionScope.memberName}" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<td>연락처</td>
-					<td><input type="text" name="memberphone" value="<%=session.getAttribute("memberPhone") %>"></td>
+					<td><input type="text" name="memberphone" value="${sessionScope.memberPhone}"></td>
 				</tr>
 					<!-- ul li로 지역 선택할 수 있게 만들기 -->	
 				<tr>

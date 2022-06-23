@@ -6,6 +6,7 @@
 	<HEAD>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<TITLE> 마이 페이지 </TITLE>
+	<link type="text/css" rel="stylesheet" href="../board2/boardcss.css">
 	<style>
 	*{
 	margin: 0px;
@@ -101,10 +102,9 @@
 		
 		
 		
-				alert("전송합니다.");
-		fm.action = "./memberjoinOk.jsp";
+		alert("전송합니다.");
 		가상경로 사용
-		fm.action = "<%=request.getContextPath()%>/member/memberJoinAction.do2";
+		fm.action = "${pageContext.request.contextPath}/member/memberJoinAction.do2";
 		fm.method = "post";
 		fm.submit();
 		
@@ -116,7 +116,7 @@
 		var fm = document.frm;
 		
 		alert("메인화면으로 돌아갑니다.");
-		fm.action = "../mainindex.jsp";
+		fm.action = "${pageContext.request.contextPath}/board2/index2.do2";
 		fm.method = "post";
 		fm.submit();
 		
@@ -127,26 +127,18 @@
 	</HEAD>
 
 	<BODY>
-	<div class="user">	
- <%
- 	if(session.getAttribute("midx") != null){
- 		out.println("회원아이디: "+session.getAttribute("memberId"));
- 		out.println("회원이름: "+session.getAttribute("memberName"));
- 		out.println("<a href='"+request.getContextPath()+"/member2/Logout.do2'>로그아웃</a>"+"<br>");
- 		
- 	}else{
- %>
-	<div><a href="<%=request.getContextPath()%>/member2/memberJoin.do2">회원가입</a>ㅣ<a href="<%=request.getContextPath()%>/member2/Login.do2">로그인</a></div>
-	<div>로그인을 해주세요</div>
-	<%} %>
-</div>
-		<center><h1>마이페이지</h1></center>
+	<!-- 공통nav -->
+	<jsp:include page="../link.jsp"/>
+	<!-- 공통nav끝 -->
+		<h1>마이페이지</h1>
 		<br>
 		
-		<ul>
-			<li><a href="마이페이지.jsp">회원정보수정</a></li>
-			<li><a href="../board/내가작성한견적페이지.jsp">내가작성한견적</a></li>
-		</ul>
+		<div class="tab">	
+			<ul class="tabnav">
+				<li><a href="${pageContext.request.contextPath}/member2/memberMyPageModify.do2?midx=${mv.midx}">회원정보수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/board2/MyEstm.do2?midx=${mv.midx}">내가작성한견적</a></li>
+			</ul>
+		</div>
 		<form name="frm">
 			<table style="text-align:left; width:400px; height:300px">
 				<tr>

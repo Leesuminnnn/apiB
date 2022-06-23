@@ -124,6 +124,7 @@ public class IqyDao {
 				iv.setWriter(rs.getString("writer"));
 				iv.setWriteday(rs.getString("writeday"));
 				iv.setChecked(rs.getString("checked"));
+				iv.setMidx(rs.getInt("midx"));
 				
 			}			
 			

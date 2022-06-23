@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ page import="single.domain.EstmVo" %>
-<% EstmVo ev =  (EstmVo)request.getAttribute("ev"); %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +47,7 @@
 	  		fm.eidx.focus();
 	  		return;
 	  	}
-		fm.action = "<%=request.getContextPath()%>/board2/estimatepmAction.do2";
+		fm.action = "${pageContext.request.contextPath}/board2/estimatepmAction.do2";
 		fm.method = "post";
 		fm.submit();
 		
@@ -67,7 +67,7 @@
 <body>
 <h1>견적서 처리 페이지</h1>
 	<form name="frm">
-	<input type="hidden" name="eidx" value="<%=ev.getEidx()%>">
+	<input type="hidden" name="eidx" value="${ev.eidx}">
 		<table>
 			<tr style="height:200px">
 				<td>처리하시겠습니까?</td>

@@ -18,8 +18,7 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import jspstudy.domain.BoardVo;
-import jspstudy.service.BoardDao;
+
 import single.service.*;
 import single.domain.*;
 import single.domain.PageMaker;
@@ -135,7 +134,7 @@ public class BoardController2 extends HttpServlet {
 			
 			//
 			
-			ArrayList<EstmVo> alist = ed.BoardSelectAll();
+			ArrayList<EstmVo> alist = ed.BoardSelectAll(scri);
 			request.setAttribute("alist", alist);   //데이터(자원) 공유
 			request.setAttribute("pm", pm);
 			
@@ -144,6 +143,9 @@ public class BoardController2 extends HttpServlet {
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/board2/estimatelist.jsp");
 			rd.forward(request, response);
+			
+			
+			
 		}
 		// 내가 작성항 견적리스트
 		else if (command.equals("/board2/MyEstm.do2")) {
@@ -175,8 +177,8 @@ public class BoardController2 extends HttpServlet {
 			
 			//
 			
-			ArrayList<EstmVo> alist = ed.BoardSelectAll();
-			request.setAttribute("alist", alist);   //데이터(자원) 공유
+			ArrayList<EstmVo> myalist = ed.BoardSelectAll(scri);
+			request.setAttribute("myalist", myalist);   //데이터(자원) 공유
 			request.setAttribute("pm", pm);
 			
 			

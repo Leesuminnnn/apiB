@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-
-<% RvVo rv = (RvVo)request.getAttribute("Rv"); %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+// 자바영역에서 세션에 URI를 저장해서 로그인 시 다시 돌아오게 함 
+session.setAttribute("saveUrl", request.getRequestURI()); %>
 
-if(session.getAttribute("midx") == null){
-	out.println("<script>alert('로그인을 해주세요');location.href='"+request.getContextPath()+"/member2/memberLogin.do2'</script>");
-}
-%>
+<c:if test="${sessionScope.midx eq null}">
+	<script>
+		alert("유효하지 않은 경로입니다. 로그인을 해주세요.");location.href='${pageContext.request.contextPath}/member2/memberLogin.do2'
+	</script>
+</c:if>
 
 <!DOCTYPE html>
 <html>
@@ -91,7 +89,7 @@ function check(){
 	    	return;		
 		}
 	//가상경로 사용
-	fm.action = "<%=request.getContextPath()%>/board2/rvModifyAction.do2";
+	fm.action = "${pageContext.request.contextPath}/board2/rvModifyAction.do2";
 	fm.method = "post";
 	fm.submit();
 	
@@ -118,19 +116,19 @@ function prev(){
 	<h1>리뷰 수정하기</h1>
 	<br>
 		<form name="frm">
-		<input type="hidden" name="ridx" value="<%=rv.getRidx() %>"/>
+		<input type="hidden" name="ridx" value="${rv.ridx}"/>
 		<table border=1 class="content">
 			<tr>
 				<td style="width: 180px; height: 40px;">제목</td>
-				<td style="padding-left: 10px;"><input type="text" name="subject" value="<%=rv.getSubject() %>"></td>
+				<td style="padding-left: 10px;"><input type="text" name="subject" value="${rv.subject}"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td style="padding: 10px;"><textarea name="content" placeholder="내 용"><%=rv.getContent() %></textarea></td>
+				<td style="padding: 10px;"><textarea name="content" placeholder="내 용">${rv.content}</textarea></td>
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="padding-left:10px;"><input type="text" name="writer" placeholder="작성자" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+				<td style="padding-left:10px;"><input type="text" name="writer" placeholder="작성자" value="${sessionScope.memberName}" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<td>첨부파일</td>

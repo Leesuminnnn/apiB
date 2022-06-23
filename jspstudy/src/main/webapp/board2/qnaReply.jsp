@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>    
-
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-<% QnaVo qv = (QnaVo)request.getAttribute("qv"); %>
+    pageEncoding="utf-8"%>   
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <!DOCTYPE html>
@@ -49,7 +44,7 @@ function check(){
 	}		
 	alert("전송합니다.");
 	//가상경로 사용
-	fm.action = "<%=request.getContextPath()%>/board2/qnaReplyAction.do2";
+	fm.action = "${pageContext.request.contextPath}/board2/qnaReplyAction.do2";
 	fm.method = "post";
 	fm.submit();
 	
@@ -80,10 +75,10 @@ function prev(){
 	<h1>QnA 답변페이지</h1>
 	<br>
 	<form name="frm">
-	<input type="hidden" name="qidx" value="<%=qv.getQidx() %>"> 
-	<input type="hidden" name="originqidx" value="<%=qv.getOriginqidx() %>">
-	<input type="hidden" name="depth" value="<%=qv.getDepth() %>">
-	<input type="hidden" name="level_" value="<%=qv.getLevel_() %>">
+	<input type="hidden" name="qidx" value="${qv.qidx}"> 
+	<input type="hidden" name="originqidx" value="${qv.originqidx}">
+	<input type="hidden" name="depth" value="${qv.depth}">
+	<input type="hidden" name="level_" value="${qv.level_}">
 	
 	
 		<table border=1>
@@ -97,7 +92,7 @@ function prev(){
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="padding-left:10px;"><input type="text" name="writer" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+				<td style="padding-left:10px;"><input type="text" name="writer" value="${sessionScope.memberName}" readonly="readonly"></td>
 			</tr>
 			<tr style="text-align: center;" >
 				<td colspan=2 style="padding-top:5px; padding-bottom:5px;">

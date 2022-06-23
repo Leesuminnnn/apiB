@@ -1,19 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8"%><%-- 
 <%@ page import="single.domain.*" %>
 <%@ page import="single.service.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-<% MemberVo mv = (MemberVo)request.getAttribute("mv"); %>
-<%
-	ArrayList<IqyVo> alist = (ArrayList<IqyVo>)request.getAttribute("alist");
-
-
-%>
-<% 
-	PageMaker pm = (PageMaker)request.getAttribute("pm");
-
-%>
+<%@ page import="single.dbconn.*" %> --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,13 +30,13 @@
 <nav>
 <p>회원관리</p>
 <ul>
-	<li><a href="<%=request.getContextPath()%>/member2/usersInfo.do2">&nbsp;사용자</a></li>
+	<li><a href="${pageContext.request.contextPath}/member2/usersInfo.do2">&nbsp;사용자</a></li>
 	
 </ul>
 <p>컨텐츠관리</p>
 <ul>
-	<li><a href="<%=request.getContextPath()%>/board2/iqylist.do2">&nbsp;문의내역</a></li>
-	<li><a href="<%=request.getContextPath()%>/board2/estimatelist.do2">&nbsp;견적내역</a></li>
+	<li><a href="${pageContext.request.contextPath}/board2/iqylist.do2">&nbsp;문의내역</a></li>
+	<li><a href="${pageContext.request.contextPath}/board2/estimatelist.do2">&nbsp;견적내역</a></li>
 </ul>
 </nav>
 
@@ -62,26 +53,26 @@
 			<td>작성자</td>
 			<td>작성일</td>
 		</tr>
-		<%for (IqyVo iv : alist) {%>
-		<tr>
-			<td style="text-align:left;">
-			<!-- 답변형 게시판 -->
-			<%for (int i =1; i<= iv.getLevel_(); i++){
-				out.println("&nbsp;&nbsp;");
-				if(i == iv.getLevel_()){
-					out.println("ㄴ");
-					
-				}
-				
-			} %>
-			<a href="<%=request.getContextPath() %>/board2/iqyView.do2?iidx=<%=iv.getIidx() %>"><%=iv.getSubject() %></a>
+			<c:forEach var="iv" items="${alist}">
 			
-			</td>
-			<td><%=iv.getWriter() %></td>
-			<td><%=iv.getWriteday().substring(5,10) %></td>
-		</tr>
-		
-<%} %>
+			
+			<tr>
+				<td style="text-align:left;">
+				<!-- 답변형 게시판 -->
+				<c:forEach var="i" begin="1" end="${iv.level_}" step="1">
+				&nbsp;&nbsp;
+					<c:if test="${i==iv.level_}">
+					└
+					</c:if>
+				</c:forEach>
+				<!-- 답변형 게시판 끝 -->			
+				<a href="${pageContext.request.contextPath}/board2/iqyView.do2?iidx=${iv.iidx}">${iv.subject}</a>
+				
+				</td>
+				<td>${iv.writer}</td>
+				<td>${iv.writeday}</td>
+			</tr>
+			</c:forEach>
 	</tbody>
 </table>
 </section>
@@ -91,31 +82,22 @@
 	<tr style="border-top:none; 
 	border-bottom: none;">
 		<td style="width:200px; text-align:right;">
-		<%
+		<c:if test="${pm.prev eq true}">
+			<a href="${pageContext.request.contextPath}/board2/iqylist.do2?page=${pm.startPage-1}&keyword=${pm.scri.keyword }">◀</a>
+		</c:if>
 		
-		String keyword = pm.getScri().getKeyword();
-		
-		String searchType = pm.getScri().getSearchType();
-		
-		if(pm.isPrev() == true)
-			out.println("<a href='"+request.getContextPath()+"/board2/iqylist.do2?page="+(pm.getStartPage()-1)+"&keyword="+pm.encoding(pm.getScri().getKeyword())+"&searchType="+pm.getScri().getSearchType()+"'>◀</a>");
-		%>
 		</td>
 		<td>
-		<%
-		for(int i = pm.getStartPage(); i<=pm.getEndPage(); i++){
-			out.println("<a href='"+request.getContextPath()+"/board2/iqylist.do2?page="+i+"&keyword="+pm.encoding(pm.getScri().getKeyword())+"&searchType="+pm.getScri().getSearchType()+"'>"+"["+i+"]"+"</a>");
-			
-		}
+		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" step="1" var="i">
+			<a href="${pageContext.request.contextPath}/board2/iqylist.do2?page=${i}&keyword=${pm.scri.keyword}">[${i}]</a>
+		</c:forEach>
 		
-		%>
 		</td>
 		<td style="width:200px; text-align:left;">
-		<%
-		if(pm.isNext()&&pm.getEndPage() > 0){
-			out.println("<a href='"+request.getContextPath()+"/board2/iqylist.do2?page="+(pm.getEndPage()+1)+"&keyword="+pm.encoding(pm.getScri().getKeyword())+"&searchType="+pm.getScri().getSearchType()+"'>▶</a>");
-		}
-		 %>
+		<c:if test="${pm.next and pm.endPage lt 0}">
+			<a href="${pageContext.request.contextPath}/board2/iqylist.do2?page=${pm.endPage+1}&keyword=${pm.scri.keyword}">▶</a>
+		</c:if>
+		
 		</td>
 	</tr>
 </table>

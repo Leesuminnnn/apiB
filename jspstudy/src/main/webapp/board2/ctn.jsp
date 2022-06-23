@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -126,7 +122,7 @@ user_wrap{
 <!-- 공통nav끝 -->
 
 <!-- 게시판 리스트 검색기능 -->
-<form name="frm" action="${pageContext.request.contextPath}/board2/ctn.do2" method="post">
+<form name="frm2" action="${pageContext.request.contextPath}/board2/ctn.do2" method="post">
 	<table class="sch">
 	<tbody style="">
 		<tr style="border-top: none; text-align:right; height: 25px;">
@@ -145,74 +141,85 @@ user_wrap{
 	</table>
 </form>
 <!-- 검색기능 끝 -->
+<c:if test="${alist eq null and  keyword eq null}">
 
+</c:if>
 
 <!-- 게시판 리스트 -->
-
-<table class="content">
-	<tbody>
-		<c:forEach var="cv" items="${alist}">
-		<tr>
-			<td>
-				<table border="1" class="content_gl">
-					<tbody>
-						<tr>
-							<td class="content_gl_content">
-							<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
-							${cv.subject}</a>
-							</td>
-							<td rowspan="2" class="content_gl_img">
-							<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
-							<img src="${pageContext.request.contextPath}/board2/ctnview.do2?filename=${cv.filename}"></a>
-							</td>
-						</tr>
-						<tr>
-							<td class="content_gl_tag">
-							${cv.tag}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-		
-		</c:forEach>
-		
-		<!-- 글쓰기 권한은 관리자만 -->
-		<tr>
-			<td colspan=3 style="background-color:White; height: 50px; text-align:right;">			
-				<c:choose>
-					<c:when test="${sessionScope.memberName eq '관리자'}">
-						<a href="${pageContext.request.contextPath}/board2/ctnwrite.do2">글쓰기</a>
-					</c:when>
-					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/board2/estimatewrite.do2">견적신청</a>
-					</c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<form name="frm">
+<input type="hidden" name="cidx" value="${cv.cidx}">
+	<table class="content">
+		<tbody>
+			<c:forEach var="cv" items="${alist}">
+			<tr>
+				<td>
+					<table border="1" class="content_gl">
+						<tbody>
+							<tr>
+								<td class="content_gl_content">
+								<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
+								${cv.subject}</a>
+								</td>
+								<td rowspan="2" class="content_gl_img" style="">
+									<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
+										<c:choose>
+											<c:when test="${cv.filename eq null}">
+												<img style="height:200px;width:200px;" src="${pageContext.request.contextPath}/images/noimg.jpg">
+											</c:when>
+											<c:otherwise>
+												<img style="height:200px;width:200px;" src="${pageContext.request.contextPath}/images/${cv.filename}">
+											</c:otherwise>
+										</c:choose>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td class="content_gl_tag">
+								${cv.tag}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			
+			</c:forEach>
+			
+			<!-- 글쓰기 권한은 관리자만 -->
+			<tr>
+				<td colspan=3 style="background-color:White; height: 50px; text-align:right;">			
+					<c:choose>
+						<c:when test="${sessionScope.memberName eq '관리자'}">
+							<a href="${pageContext.request.contextPath}/board2/ctnwrite.do2">글쓰기</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${pageContext.request.contextPath}/board2/estimatewrite.do2">견적신청</a>
+						</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
 <!-- 게시판리스트 끝 -->
 
 <!-- 게시판 페이징 -->
 <table style="width:600px; height:25px; text-align:center; margin:0 auto;">
-	<tr style="border-top:none; 
-	border-bottom: none;">
+	<tr style="border-top:none; border-bottom: none;">
 		<td style="width:200px; text-align:right;">
-		<c:if test="${pm.prev == true}">
-		<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${pm.startPage-1}&keyword=${pm.scri.keyword }&searchType=${pm.scri.searchtype}">◀</a>
-		</c:if>
+			<c:if test="${pm.prev eq true}">
+				<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${pm.startPage-1}&keyword=${pm.scri.keyword }&searchType=${pm.scri.searchType}">◀</a>
+			</c:if>
 		</td>
 		<td>
-		<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-		<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${i}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">[${i}]</a>
-		</c:forEach>
+			<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+				<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${i}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">[${i}]</a>
+			</c:forEach>
 		</td>
 		<td style="width:200px; text-align:left;">
-		 <c:if test="${pm.next&&pm.endPage > 0}">
-		 <a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${pm.endPage+1}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">▶</a>
-		 </c:if>
+			<c:if test="${pm.next and pm.endPage lt 0}">
+				<a href="${pageContext.request.contextPath}/board2/ctn.do2?page=${pm.endPage+1}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">▶</a>
+			</c:if>
 		</td>
 	</tr>
 </table>

@@ -2,11 +2,8 @@
     pageEncoding="utf-8"%>
 <%@ page import="jspstudy.domain.*" %>
 <%@ page import="java.util.*" %>
-<% 
-	ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
-	PageMaker pm = (PageMaker)request.getAttribute("pm");
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +28,8 @@ tr>td:first-child{
 <h1><a onClick="window.location.reload()">고객센터</a></h1>
 
 <ul>
-	<li><a href="<%=request.getContextPath()%>/board2/qna.do2">Q n A</a></li>
-	<li><a href="<%=request.getContextPath()%>/board2/iqy.do2">1:1 문의</a></li>
+	<li><a href="${pageContext.request.contextPath}/board2/qna.do2">Q n A</a></li>
+	<li><a href="${pageContext.request.contextPath}/board2/iqy.do2">1:1 문의</a></li>
 </ul>
 
 <table class="list">
@@ -40,7 +37,7 @@ tr>td:first-child{
 		<td>불편한점이 있으신가요?</td>
 	</tr>
 	<tr>
-		<td><a href="iqywrite.do2">문의하기</a></td>
+		<td><a href="${pageContext.request.contextPath}/board2/iqywrite.do2">문의하기</a></td>
 	</tr>
 </table>
 

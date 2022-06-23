@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <HTML>
 	<HEAD>
@@ -93,17 +94,17 @@
 		// ajax를 이용한 아이디 중복체크와 정규식
 		$('#idCheck').on('focusout' , function(){
 		var memberId = $(this).val();
-		var regId = /^[a-z]+[a-z0-9]{4,19}$/g;
+		var regId =  /^[a-z0-9_]{4,20}$/;
 		if(memberId == ""){
 			$('#checkId').html('아이디를 입력해주세요');
 			$('#checkId').attr('color','red');
 		}else if(!regId.test($(this).val())){
-			$('#checkId').html('아이디는 영문, 숫자만 가능하며 5-19자리만 가능합니다');
+			$('#checkId').html('아이디는 영문, 숫자만 가능하며 4-20자리만 가능합니다');
 			$('#checkId').attr('color','red');
 			$('#checkId').focus();
 		}else if(!regId.test(this)){
 			$.ajax({
-				url : "<%=request.getContextPath()%>/member2/checkId.do2",
+				url : "${pageContext.request.contextPath}/member2/checkId.do2",
 				type : 'POST',
 				data : { "memberId": memberId },
 				async : false,
@@ -127,14 +128,14 @@
 		$('#pwd').on('focusout' , function(){
    			
 	 		  var memberPwd = $(this).val();
-	    	  var regPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+	    	  var regPwd =  /^[a-z0-9_]{8,20}$/;
 	 		  if(memberPwd == "") {
 				   $('#checkPwd').html('비밀번호를 입력해주세요.');
 				   $('#checkPwd').attr('color','red');
 	 		  }else if(regPwd.test($(this).val())){
 				   $('#checkPwd').html('');
 	 		  }else{
-	 			   $('#checkPwd').html('비밀번호는 최소 8자, 하나의 이상의 대소문자 및 하나의 숫자, 하나의 특수문자로 입력해주세요');
+	 			   $('#checkPwd').html('비밀번호는 문자,숫자로 구성된 8글자 이상으로 조합하시오.');
 	 			   $('#checkPwd').attr('color','red');
 	 			   $('#pwd').focus();
 	 		  }
@@ -236,31 +237,31 @@
   			var memberAddr = $("#addr").val();
   			var memberPhone = $("#phone").val();
   			
-  			if(memberId == ''){
+  			if(memberId == ""){
   				alert("아이디를 입력해주세요");
   				$("#idCheck").focus();
   				return false;
-  			}else if(memberPwd == ''){
+  			}else if(memberPwd == ""){
   				alert("비밀번호를 입력해주세요");
   				$("#pwd").focus();
   				return false;
-  			}else if(memberPwd2 == ''){
+  			}else if(memberPwd2 == ""){
   				alert("비밀번호 확인을 입력해주세요");
   				$("#pwd2").focus();
   				return false;
-  			}else if(memberName == ''){
+  			}else if(memberName == ""){
   				alert("이름을 입력해주세요");
   				$("#name").focus();
   				return false;
-  			}else if(memberEmail == ''){
+  			}else if(memberEmail == ""){
   				alert("이메일을 입력해주세요");
   				$("#emaild").focus();
   				return false;
-  			}else if(memberAddr == ''){
+  			}else if(memberAddr == ""){
   				alert("지역을 선택해주세요");
   				$("#addr").focus();
   				return false;
-  			}else if(memberPhone == ''){
+  			}else if(memberPhone == ""){
   				alert("휴대폰 번호를 입력해주세요");
   				$("#phone").focus();
   				return false;
@@ -293,7 +294,7 @@
 <!-- 공통nav끝 -->
 		<h1>회원가입</h1>
 		<br>
-		<form name="frm" id="frm" action="<%=request.getContextPath()%>/member2/memberJoinAction.do2" method="post">
+		<form name="frm" id="frm" action="${pageContext.request.contextPath}/member2/memberJoinAction.do2" method="post">
 		
 			<table style="text-align:left; width:400px; height:300px">
 				<tr>

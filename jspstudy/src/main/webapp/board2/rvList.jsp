@@ -1,20 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %>
-<%
-	ArrayList<RvVo> alist = (ArrayList<RvVo>)request.getAttribute("alist");
-%>
-<% 
-	PageMaker pm = (PageMaker)request.getAttribute("pm");
-	MemberVo mv = (MemberVo)request.getAttribute("mv");
-	
-	String keyword = pm.getScri().getKeyword();
-	
-	String searchType = pm.getScri().getSearchType();
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +39,7 @@ tr{
 <jsp:include page="/link.jsp"/>
 <!-- 공통nav끝 -->
 <!-- 게시판 리스트 검색기능 -->
-<form name="frm" action="<%=request.getContextPath()%>/board2/rvList.do2" method="post">
+<form name="frm" action="${pageContext.request.contextPath}/board2/rvList.do2" method="post">
 	<table class="sch">
 		<tbody style="">
 			<tr style="border-top: none; text-align:right; height: 25px; margin:0 auto;">
@@ -71,36 +58,37 @@ tr{
 	</table>
 </form>
 <!-- 검색기능 끝 -->
-
-<% 
-if(alist == null && keyword == null){
-	out.println("작성된 글이 존재하지 않습니다.");
+<!-- 글이 존재하지 않을경우 -->
+<c:choose>
+	<c:when test="${alist eq null}">
+		<div>글이 존재하지 않습니다.</div>
+	</c:when>
+	<c:otherwise>
 	
-}
 
-%>
-
-<%for (RvVo rv: alist) {%>
+<c:forEach var="rv" items="${alist}">
 <table border="1" class="content">
 	<tbody>
 		<tr>
-			<td style="text-align:left;"><a href="<%=request.getContextPath()%>/board2/rvView.do2?ridx=<%=rv.getRidx()%>"><%=rv.getSubject()%><br><%=rv.getContent() %></a></td>
-			<td rowspan="2" style="width:150px; height:200px;"><%=rv.getFilename() %></td>
+			<td style="text-align:left;"><a href="${pageContext.request.contextPath}/board2/rvView.do2?ridx=${rv.ridx}">${rv.subject}<br>${rv.content}</a></td>
+			<td rowspan="2" style="width:150px; height:200px;">${rv.filename}</td>
 		</tr>
 		<tr>
 			<td style="text-align:left; height:60px; width:540px;">
-			별점:<%=rv.getStar() %> <%=rv.getWriter().substring(0,1) %>**님<br>
-			<a href="<%=request.getContextPath() %>/board2/rvList.do2??page=<%=pm.getStartPage()-1%>&keyword=<%=rv.getTag()%>&searchType=tag<%=rv.getTag() %>"><%=rv.getTag() %></a>
+			별점:${rv.star} ${rv.writer}님<br>
+			<a href="${pageContext.request.contextPath}/board2/rvList.do2?page=${pm.startPage-1}&keyword=${rv.tag}&searchType=tag${rv.tag}">${rv.tag}</a>
 			</td>
 		</tr>
 	</tbody>
 </table>
 <br>
-<%} %>
+</c:forEach>
+</c:otherwise>
+</c:choose>
 <table class="content">
 	<tbody>
 		<tr>
-			<td><a href="<%=request.getContextPath()%>/board2/rvwrite.do2">리뷰작성하기</a></td>
+			<td><a href="${pageContext.request.contextPath}/board2/rvwrite.do2">리뷰작성하기</a></td>
 		</tr>
 	</tbody>
 </table>
@@ -108,32 +96,22 @@ if(alist == null && keyword == null){
 <table style="width:600px; height:25px; text-align:center; margin:0 auto;">
 	<tr style="border-top:none; border-bottom: none;">
 		<td style="width:200px; text-align:right;">
-		<%
-		
-		
-		if(pm.isPrev() == true)
-			out.println("<a href='"+request.getContextPath()+"/board2/rvList.do2?page="+(pm.getStartPage()-1)+"&keyword="+keyword+"&searchType="+searchType+"'>◀</a>");
-		%>
+			<c:if test="${pm.prev eq true}">
+				<a href="${pageContext.request.contextPath}/board2/rvList.do2?page=${pm.startPage-1}&keyword=${pm.scri.keyword }&searchType=${pm.scri.searchType}">◀</a>
+			</c:if>
 		</td>
 		<td>
-		<%
-		for(int i = pm.getStartPage(); i<=pm.getEndPage(); i++){
-			out.println("<a href='"+request.getContextPath()+"/board2/rvList.do2?page="+i+"&keyword="+keyword+"&searchType="+searchType+"'>"+"["+i+"]"+"</a>");
-			
-		}
-		
-		%>
+			<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
+				<a href="${pageContext.request.contextPath}/board2/rvList.do2?page=${i}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">[${i}]</a>
+			</c:forEach>
 		</td>
 		<td style="width:200px; text-align:left;">
-		<%
-		if(pm.isNext()&&pm.getEndPage() > 0){
-			out.println("<a href='"+request.getContextPath()+"/board2/rvList.do2?page="+(pm.getEndPage()+1)+"&keyword="+keyword+"&searchType="+searchType+"'>▶</a>");
-		}
-		 %>
+			<c:if test="${pm.next and pm.endPage lt 0}">
+				<a href="${pageContext.request.contextPath}/board2/rvList.do2?page=${pm.endPage+1}&keyword=${pm.scri.keyword}&searchType=${pm.scri.searchType}">▶</a>
+			</c:if>
 		</td>
 	</tr>
 </table>
 <!-- 게시판 페이징 끝 -->
-<% %>
 </body>
 </html>

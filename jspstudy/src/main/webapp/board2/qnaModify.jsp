@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="single.domain.QnaVo" %>
-
-<% QnaVo qv =  (QnaVo)request.getAttribute("qv"); %>
-<%
-
-if(session.getAttribute("midx") == null){
-	out.println("<script>alert('로그인을 해주세요');location.href='"+request.getContextPath()+"/member/memberLogin.do'</script>");
-}
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${sessionScope.midx eq null}">
+	<script>
+		alert("잘못된 접근입니다. 로그인을 해주세요");location.href="${pageContext.request.contextPath}/member2/Login.do2"
+	</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +52,7 @@ function check(){
 	    	return;		
 		}
 	//가상경로 사용
-	fm.action = "<%=request.getContextPath()%>/board2/qnaModifyAction.do2";
+	fm.action = "${pageContext.request.contextPath}/board2/qnaModifyAction.do2";
 	fm.method = "post";
 	fm.submit();
 	
@@ -84,19 +81,19 @@ function prev(){
 	<h1>Qna 수정하기</h1>
 	<br>
 	<form name="frm">
-	<input type="hidden" name="qidx" value="<%=qv.getQidx() %>">
+	<input type="hidden" name="qidx" value="${qv.qidx}">
 		<table border=1>
 			<tr>
 				<td style="width: 90px; height: 40px;">제목</td>
-				<td style="padding-left: 10px; width: 510px;"><input type="text" name="subject" value="<%=qv.getSubject() %>"></td>
+				<td style="padding-left: 10px; width: 510px;"><input type="text" name="subject" value="${qv.subject}"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td style="padding: 10px;"><textarea name="content" placeholder="내 용"><%=qv.getContent() %></textarea></td>
+				<td style="padding: 10px;"><textarea name="content" placeholder="내 용">${qv.content}</textarea></td>
 			</tr>
 			<tr>
 				<td style="width: 70px; height: 40px;">작성자</td>
-				<td style="padding-left:10px;"><input type="text" name="writer" placeholder="작성자" value="<%=session.getAttribute("memberName") %>" readonly="readonly"></td>
+				<td style="padding-left:10px;"><input type="text" name="writer" placeholder="작성자" value="${sessionScope.memberName}" readonly="readonly"></td>
 			</tr>
 			<tr style="text-align: center;" >
 				<td colspan=2 style="padding-top:5px; padding-bottom:5px;">
