@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="single.domain.*" %>
-<%@ page import="java.util.*" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <HTML>
 	<HEAD>
@@ -135,11 +134,12 @@
 		
 		<div class="tab">	
 			<ul class="tabnav">
-				<li><a href="${pageContext.request.contextPath}/member2/memberMyPageModify.do2?midx=${mv.midx}">회원정보수정</a></li>
-				<li><a href="${pageContext.request.contextPath}/board2/MyEstm.do2?midx=${mv.midx}">내가작성한견적</a></li>
+				<li><a href="${pageContext.request.contextPath}/member2/memberMyPageModify.do2?midx=${midx}">회원정보수정</a></li>
+				<li><a href="${pageContext.request.contextPath}/board2/MyEstm.do2?midx=${midx}">내가작성한견적</a></li>
 			</ul>
 		</div>
 		<form name="frm">
+		<input type="hidden" name="midx" value="${mv.midx }">
 			<table style="text-align:left; width:400px; height:300px">
 				<tr>
 					<td>아이디</td>

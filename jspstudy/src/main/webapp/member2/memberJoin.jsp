@@ -92,7 +92,7 @@
 
 		//===============
 		// ajax를 이용한 아이디 중복체크와 정규식
-		$('#idCheck').on('focusout' , function(){
+		$('#idCheck').on('keyup' , function(){
 		var memberId = $(this).val();
 		var regId =  /^[a-z0-9_]{4,20}$/;
 		if(memberId == ""){

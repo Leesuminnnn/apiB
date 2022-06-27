@@ -41,8 +41,8 @@
 	
 	<div class="tab">	
 		<ul class="tabnav">
-			<li><a href="${pageContext.request.contextPath}/member2/memberMyPageModify.do2?midx=${mv.midx}">회원정보수정</a></li>
-			<li><a href="${pageContext.request.contextPath}/board2/MyEstm.do2?midx=${mv.midx}">내가작성한견적</a></li>
+			<li><a href="${pageContext.request.contextPath}/member2/memberMyPageModify.do2?midx=${midx}">회원정보수정</a></li>
+			<li><a href="${pageContext.request.contextPath}/board2/MyEstm.do2?midx=${midx}">내가작성한견적</a></li>
 		</ul>
 	</div>
 	<form name="frm">

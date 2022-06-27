@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%><%-- 
-<%@ page import="single.domain.*" %>
-<%@ page import="single.service.*" %>
-<%@ page import="java.util.*" %>
-<%@ page import="single.dbconn.*" %> --%>
+    pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -45,7 +41,7 @@
 </div>
 
 
-<section>
+<section style="margin-top: -100px;">
 <table style="width:690px;" border="1" class="content" >
 	<tbody>
 		<tr>

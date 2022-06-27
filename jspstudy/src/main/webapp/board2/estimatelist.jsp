@@ -2,6 +2,11 @@
     pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:if test="${sessionScope.memberName ne '관리자'}">
+	<script>
+		alert("유효하지 않는 접근입니다.");location.href="${pageContext.request.contextPath}/board2/index2.do2
+	</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +47,7 @@
 </div>
 
 
-<section>
+<section style="margin-top: -100px;">
 <!-- 게시판 리스트 검색기능 -->
 <form name="frm" action="${pageContext.request.contextPath}/board2/estimatelist.do2" method="post">
 	<table class="sch">

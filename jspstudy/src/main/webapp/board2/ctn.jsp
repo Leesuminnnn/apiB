@@ -150,40 +150,49 @@ user_wrap{
 <input type="hidden" name="cidx" value="${cv.cidx}">
 	<table class="content">
 		<tbody>
-			<c:forEach var="cv" items="${alist}">
-			<tr>
-				<td>
-					<table border="1" class="content_gl">
-						<tbody>
-							<tr>
-								<td class="content_gl_content">
-								<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
-								${cv.subject}</a>
-								</td>
-								<td rowspan="2" class="content_gl_img" style="">
-									<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
-										<c:choose>
-											<c:when test="${cv.filename eq null}">
-												<img style="height:200px;width:200px;" src="${pageContext.request.contextPath}/images/noimg.jpg">
-											</c:when>
-											<c:otherwise>
-												<img style="height:200px;width:200px;" src="${pageContext.request.contextPath}/images/${cv.filename}">
-											</c:otherwise>
-										</c:choose>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="content_gl_tag">
-								${cv.tag}
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-			
+		
+		
+		<c:choose>
+		<c:when test="${alist eq '[]'}">
+				<p style="text-align:center;">글이 존재하지 않습니다.</p>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="cv" items="${alist}">
+					<tr>
+						<td>
+							<table border="1" class="content_gl">
+								<tbody>
+									<tr>
+										<td class="content_gl_content">
+										<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
+										${cv.subject}</a>
+										</td>
+										<td rowspan="2" class="content_gl_img" style="">
+											<a href="${pageContext.request.contextPath}/board2/ctnview.do2?cidx=${cv.cidx}">
+												<c:choose>
+													<c:when test="${cv.filename eq null}">
+														<img style="height:200px;width:200px;" src="${pageContext.request.contextPath}/images/noimg.jpg">
+													</c:when>
+													<c:otherwise>
+														<img style="height:200px;width:200px;" src="${pageContext.request.contextPath}/images/${cv.filename}">
+													</c:otherwise>
+												</c:choose>
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td class="content_gl_tag">
+										${cv.tag}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
 			</c:forEach>
+			</c:otherwise>
+		</c:choose>
+			
 			
 			<!-- 글쓰기 권한은 관리자만 -->
 			<tr>

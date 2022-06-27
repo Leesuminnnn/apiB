@@ -60,8 +60,8 @@ tr{
 <!-- 검색기능 끝 -->
 <!-- 글이 존재하지 않을경우 -->
 <c:choose>
-	<c:when test="${alist eq null}">
-		<div>글이 존재하지 않습니다.</div>
+	<c:when test="${alist eq '[]'}">
+		<p style="text-align:center;">글이 존재하지 않습니다.</p>
 	</c:when>
 	<c:otherwise>
 	
@@ -71,7 +71,17 @@ tr{
 	<tbody>
 		<tr>
 			<td style="text-align:left;"><a href="${pageContext.request.contextPath}/board2/rvView.do2?ridx=${rv.ridx}">${rv.subject}<br>${rv.content}</a></td>
-			<td rowspan="2" style="width:150px; height:200px;">${rv.filename}</td>
+			<td rowspan="2" style="width:150px; height:200px;">
+			<c:choose>
+				<c:when test="${rv.filename eq null}">
+					<img style="height:150px;width:200px;" src="${pageContext.request.contextPath}/images/noimg.jpg">
+				</c:when>
+				<c:otherwise>
+					<img style="height:150px;width:200px;" src="${pageContext.request.contextPath}/images/${rv.filename}">
+				</c:otherwise>
+			</c:choose>
+				
+			</td>
 		</tr>
 		<tr>
 			<td style="text-align:left; height:60px; width:540px;">

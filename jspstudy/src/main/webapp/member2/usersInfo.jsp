@@ -44,14 +44,14 @@
 				<td>연락처</td>
 				<td>가입일</td>
 			</tr>
-			<c:forEach var="mv" items="alist">
+			<c:forEach var="mv" items="${alist}">
 			<tr>
 				<td>${mv.midx}</td>
-				<td>${mv.memberName}</td>
-				<td>${mv.memberId}</td>
-				<td>${mv.memberEmail}</td>
-				<td>${mv.memberGender}</td>
-				<td>${mv.memberPhone}</td>
+				<td>${mv.membername}</td>
+				<td>${mv.memberid}</td>
+				<td>${mv.memberemail}</td>
+				<td>${mv.membergender}</td>
+				<td>${mv.memberphone}</td>
 				<td>${mv.writeday}</td>
 			</tr>
 			</c:forEach>

@@ -473,9 +473,10 @@ public class BoardController2 extends HttpServlet {
 			
 			
 			ArrayList<RvVo> alist = rvd.BoardSelectAll(scri);
-			
+			System.out.println("alist: "+alist);
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
+			
 			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/board2/rvList.jsp");
